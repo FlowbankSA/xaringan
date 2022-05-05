@@ -111,6 +111,7 @@ a, a > code {
 .inverse {
   background-color: var(--inverse-background-color);
   color: var(--inverse-text-color);
+  text-shadow: none; !important;
   
 }
 .inverse h1, .inverse h2, .inverse h3 {
@@ -124,6 +125,9 @@ a, a > code {
 }
 .title-slide {
   background-color: var(--title-slide-background-color);
+  background-image: url(https://github.com/munoztd0/xaringan/raw/master/background.jpg)!important;
+  background-position: 50% 50%;
+  background-size: cover
 }
 .title-slide .remark-slide-number {
   display: none;
@@ -292,6 +296,7 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   text-align: left !important;
   color: #3CBA7E !important;
   font-size: 16 !important;
+  float: right;
 }
 
 div.blue { 
@@ -303,10 +308,23 @@ div.blue {
   font-weight: bold;
 }
 
-.inverse {
-    text-shadow: none; !important;
-}
 
 .hljs-github .hljs {
     background: white; !important;
 }
+
+.pre {
+  height: 30pc;
+  overflow-y: scroll;
+}
+
+.pre2 {
+  height: 20pc;
+  overflow-y: scroll;
+}
+
+.pre3 {
+  height: 25pc;
+  overflow-y: scroll;
+}
+
