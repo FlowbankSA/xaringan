@@ -1,0 +1,81 @@
+
+.navbar.navbar-default {
+	/* Couleur de fond de la barre de navigation */
+	background-color: #2c2e39;
+	font-size: 20px;
+   }
+   /* Couleur des titres affichés dans la barre */
+   .navbar.navbar-default .navbar-brand {
+	color: #3CBA7E;
+	background-color:#2c2e39;
+	font-size: 40px;
+   }
+
+   .navbar.navbar-default .navbar-nav>li>a {
+    color: #3CBA7E;
+}
+/*
+.selectize-input, .selectize-control.single .selectize-input.input-active {
+    background: #3a3a3a;
+}*/
+
+.selectize-control.multi .selectize-input > div {
+    cursor: pointer;
+    font-size: 13px;
+    margin: 0 4px 4px 0;
+    padding: 1px 3px;
+    -background: #2c2e39;
+    color: #3CBA7E;
+    border: 0 solid rgb(23 255 0 / 0%);
+}
+
+body {
+	font-size: 15px;
+}
+
+.btn-group {
+    box-shadow: 1px 1px 4px #3CBA7E;
+}
+.btn {
+    text-transform: uppercase;
+    border: none;
+    box-shadow: 1px 1px 4px #3CBA7E;
+    transition: all 0.4s;
+    background-color: #2c2e39;
+    color: #3CBA7E;
+}
+
+table.dataTable td.sorting_1{
+    background-color: #b6b6b6 !important;
+    border:1px #202020 !important;
+  }
+
+.table>thead>tr>th {
+    vertical-align: bottom !important;
+    background-color: #2c2e39 !important;
+    color: #3CBA7E !important;
+    border-bottom: 3px solid #3CBA7E !important;
+}
+
+caption {
+    color: #2c2e39 !important;
+    font-size: 13 !important;
+  }
+
+  .shiny-input-container:not(.shiny-input-container-inline) {
+    color: #3CBA7E;
+}
+
+.navbar-header {
+    font-size: 20px;
+    padding-right: 40px;
+}
+
+.code {
+    color: #3CBA7E;
+}
+
+hr { border: 1px solid #3CBA7E !important;
+	border-radius: 2px !important;
+	overflow: visible !important;
+}
