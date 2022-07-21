@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Quant Team Data Engineering and Development Framework</title>
+    <meta charset="utf-8" />
+    <script src="data_engeneering_files/header-attrs/header-attrs.js"></script>
+    <link href="data_engeneering_files/remark-css/default.css" rel="stylesheet" />
+    <link href="data_engeneering_files/remark-css/flowBank.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: left, centre, my-title, title-slide
+
+.title[
+# Quant Team Data Engineering and Development Framework
+]
+.subtitle[
+## <br /> <br /> FlowBank
+]
+.date[
+### <br /> <br /> 29 April, 2022
+]
+
+---
+
+
+&lt;style&gt;
+.pre {
+  height: 30pc;
+  overflow-y: scroll;
+}
+
+.pre2 {
+  height: 20pc;
+  overflow-y: scroll;
+}
+
+.pre3 {
+  height: 25pc;
+  overflow-y: scroll;
+}
+
+.title-slide h3 {
+     float: right;
+}
+
+&lt;/style&gt;
+
+
+
+
+
+
+# Table des matières
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+&lt;div class = "blue"&gt;
+1. Git
+&lt;/div&gt;
+&lt;br /&gt;  
+
+
+&lt;div class = "blue"&gt;
+2. CI / CD &amp; Azure DevOps
+&lt;/div&gt;
+&lt;br /&gt; 
+
+&lt;div class = "blue"&gt;
+3. Coding Best Practices &amp; Reproducibility 
+&lt;/div&gt;
+&lt;br /&gt;  
+
+
+&lt;div class = "blue"&gt;
+4. Aesthetic &amp; Design Homogenization
+&lt;/div&gt;
+
+---
+
+
+
+class: inverse center middle
+
+# Git Workflow
+
+![](./img/workflow.svg)
+
+
+
+---
+
+# Git Reminders
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+
+.pre[
+
+```bash
+#create a new branch named "feature" and switch to it using
+git checkout -b feature
+
+#switch back to master
+git checkout master
+
+#a branch is not available to others unless you push the branch to your remote repository
+git push origin &lt;branch&gt;
+
+
+#try to auto-merge changes
+git merge &lt;branch&gt;
+
+#Unfortunately, this is not always possible and results in conflicts. 
+#You might have to merge those conflicts manually and then
+git add . &amp; git merge
+
+#if you mess up, replace local changes with 
+git checkout -- &lt;filename&gt;
+# which replaces the changes in your working tree with the last content in HEAD.
+
+#If you instead want to drop all your local changes and commits, 
+# then fetch the latest history from the server
+git fetch origin &amp; git reset --hard origin/&lt;branch&gt;
+
+#if you want to fast forward to a branch, i.e. main
+git rebase old_branch new_branch
+
+```
+]
+
+
+---
+
+# Git Prompt
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+## [Oh-my-bash - Theme Agnoster](https://github.com/ohmybash/oh-my-bash)
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+&lt;img src="img/powerline.png" width="650px" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse center middle
+
+# CI / CD with Azure DevOps
+
+
+&lt;img src="img/azure_devops_CI.png" width="650px" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+# Continous Integration
+
+
+.pull-left[
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+## [Azure Pipeline for our packages](https://dev.azure.com/FlowBank/Quant%20Reporting/_build/results?buildId=14410&amp;view=logs&amp;j=12f1170f-54f2-53f3-20dd-22fc7dff55f9)
+
+## [Unit Testing with testthat](https://dev.azure.com/FlowBank/Quant%20Reporting/_build/results?buildId=14410&amp;view=ms.vss-test-web.build-test-results-tab)
+
+## [Summary Report in html](https://dev.azure.com/FlowBank/Quant%20Reporting/_build/results?buildId=14410&amp;view=codecoverage-tab)
+]
+
+
+.pull-right[
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt;
+
+&lt;img src="img/azure_CI.png" width="250px" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+]
+
+
+
+
+---
+# Continuous Delivery
+
+
+
+.pull-left[
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt;
+
+## [Webhooks](https://dev.azure.com/FlowBank/Quant%20Reporting/_settings/serviceHooks)
+
+## [PHP events to run Bash](http://analytics-dev.flowbank.network:8080/cgi-bin/test.sh)
+
+## [Azure Web Apps](https://azure.microsoft.com/en-us/services/app-service/web/)
+]
+
+.pull-right[
+&lt;br /&gt;
+
+
+&lt;img src="img/azure_CD.png" width="200px" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+]
+
+---
+
+class: inverse center middle
+
+# Coding Best Practices
+
+
+
+&lt;img src="img/code-main.jpg" width="2000px" style="display: block; margin: auto;" /&gt;
+
+
+
+
+
+---
+
+# Coding Standards Part 1
+
+&lt;br /&gt; 
+
+
+### Reproducible Scripts AKA "But it works on my machine"
+
+.pre3[
+
+```r
+# The first line is just to ensure that pacman is installed.
+
+if(!require(pacman)) {
+  install.packages("pacman")
+  library(pacman)
+}
+
+#p_load check if package is installed, if yes it loads it
+#if not, it installs and loads it
+pacman::p_load(package1,package2,this.path)
+
+#Determine the full path of the executing script
+#dirname() just extracts the parent directory where the scripts is
+path = dirname(this.path())
+
+#set your working directory OR use file.path() to append it
+setwd(path) # or file.path(path, 'data')
+
+
+#If you want to forcefully quiet down an output message
+pkgcond::suppress_messages(my_noisy_function())
+```
+]
+
+
+
+
+
+
+---
+
+
+# Coding Standards Part 2
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+### Try not to hardcode any secrets like keys, tokens, credentials in code, or even scripts
+
+&lt;br /&gt; 
+### Do not push unnecessary .env, .Rdata or .Rhistory files -&gt; use [.gitignore](https://dev.azure.com/FlowBank/Quant%20Reporting/_git/flowbankanalytics?path=/.gitignore&amp;version=GBmaster&amp;_a=contents)
+
+&lt;br /&gt; 
+
+### Remove Dead Code
+
+---
+
+
+# Coding Standards Part 3
+
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+
+### Rewrite what you wrote (AKA solve first, write after)
+
+
+
+### Useful Comments OR Readable Code -&gt; check [Hadley's rules for R](http://stat405.had.co.nz/r-style.html)
+
+.pre2[
+
+
+```r
+# Meaningful file names 
+
+# Good
+explore-diamonds.r
+
+# Bad
+foo.r
+
+
+#Use _ to separate words within a name 
+
+# Good
+day_one
+
+# Bad
+DayOne
+
+
+# Always indent the code inside the curly braces.
+
+# Good
+
+if (y &lt; 0 &amp;&amp; debug) {
+  message("Y is negative")
+}
+
+if (y == 0) {
+  log(x)
+} else {
+  y ^ x
+}
+
+# Bad
+
+if (y &lt; 0 &amp;&amp; debug)
+message("Y is negative")
+
+if (y == 0) {
+  log(x)
+} 
+else {
+  y ^ x
+}
+```
+]
+
+---
+
+# Permissions
+
+&lt;br /&gt; 
+&lt;br /&gt;
+
+## Group permissions with fbquant group
+
+
+
+&lt;img src="img/perms.PNG" width="800px" style="display: block; margin: auto;" /&gt;
+
+
+
+&lt;img src="img/sudo.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Shared Libraries
+
+&lt;br /&gt; 
+&lt;br /&gt;
+
+
+```r
+.libPaths()
+
+#shared library                         #private library
+"/usr/local/lib/R/site-library"         "/home/david/R/R-4.1.3/library""
+```
+
+#### To update a package you can either install it from azure repo
+
+```bash
+# remove sudo to install on your session only &amp; need a PAT (personal access token !)
+R -q -e 'gitcred &lt;- git2r::cred_user_pass(username="firstname.lastname@flowbank.com", password=Your_PAT); remotes::install_git("https://dev.azure.com/FlowBank/Quant%20Reporting/_git/flowbankanalytics", credentials = gitcred, update=TRUE, upgrade=TRUE, quiet =TRUE)'
+```
+
+#### Or
+
+```bash
+#skip this step to install it locally &amp; check that your are in the parent folder of package
+sudo su shiny
+R -q -e 'devtools::install_local()'
+```
+
+
+---
+
+class: inverse center middle
+
+#  Aesthetic &amp; Design Homogenization
+
+
+
+&lt;img src="img/design.png" width="850px" style="display: block; margin: auto;" /&gt;
+
+---
+
+#  Website
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+ &lt;iframe src="http://analytics.flowbank.network/" width="100%" height="500px" id="iframe1" marginheight="0" frameborder="0" onload='javascript:resizeIframe(this);'&gt;&lt;/iframe&gt;
+ 
+---
+
+#  Template with Xaringan
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+## [FlowBank Analytics Template for R](https://dev.azure.com/FlowBank/Quant%20Reporting/_git/xaringan-FB)
+
+&lt;img src="img/xaringan.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+---
+
+#  Login Homogenization
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+## [Using Azure Active Directory for R](https://github.com/Azure/AzureAuth)
+
+&lt;img src="img/logo.png" width="300px" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+#  Automation
+
+.pull-left[
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+## Let me know of any repetitive task!
+]
+
+.pull-right[
+&lt;br /&gt; 
+&lt;br /&gt; 
+&lt;br /&gt; 
+
+&lt;img src="img/automatic.png" width="400px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+.logo {
+  background-image: url(flowbank-logo-2022-GW.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 2.5em;
+  right: 4.5em;
+  width: 130px;
+  height: 148px;
+  z-index: 0;
+}
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    // ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"></div>';
+  });
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
